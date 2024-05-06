@@ -1,0 +1,35 @@
+.half-card {
+  width: 98%;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-label {
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 60%;
+}
+
+.data-value-green {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: green;
+}
+
+.data-value-blue {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #1976d2;
+}
+
+.grey-card {
+  background-color: #fafafa;
+  height: 135px;
+}

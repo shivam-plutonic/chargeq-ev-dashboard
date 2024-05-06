@@ -24,8 +24,24 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'charging-stations',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: async () => (await import('./pages/dashboard/dashboard.module')).DashboardModule,
+        data: {
+          menu: {
+            title: 'dashboard',
+            type: 'link',
+            icon: 'dashboard',
+            path: '/dashboard',
+          },
+          auth: {
+            entity: Entity.DASHBOARD,
+            action: Action.LIST,
+          },
+        },
       },
       {
         path: 'charging-stations',

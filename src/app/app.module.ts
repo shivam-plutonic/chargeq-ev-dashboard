@@ -77,6 +77,7 @@ import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { Utils } from './utils/Utils';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeFr);
@@ -226,6 +227,7 @@ class CustomTranslateDefaultParser extends TranslateDefaultParser {
     AdminLayoutComponent,
     AuthLayoutComponent,
     ReleaseNotesComponent,
+    DashboardComponent
   ],
   exports: [
     TranslateModule,
