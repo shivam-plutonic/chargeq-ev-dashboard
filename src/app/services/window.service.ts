@@ -35,6 +35,7 @@ export class WindowService {
   }
 
   public getSubdomain(): string {
+    return 'demo';
     const urlParsed = parse(this.window.location.host);
     return urlParsed.publicSuffix === 'localhost' ? urlParsed.domainWithoutSuffix ?? '' : urlParsed.subdomain;
   }

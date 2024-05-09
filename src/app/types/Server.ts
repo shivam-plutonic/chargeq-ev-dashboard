@@ -595,6 +595,7 @@ export enum RESTServerRoute {
   REST_ASSET_CONSUMPTIONS = 'assets/:id/consumptions',
   REST_ASSET_IMAGE = 'assets/:id/image',
 
+  REST_DASHBOARD = 'dashboard',
   REST_CARS = 'cars',
   REST_CAR = 'cars/:id',
   REST_CAR_CATALOGS = 'car-catalogs',

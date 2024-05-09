@@ -89,6 +89,17 @@ export interface DataResult<T> extends DataResultAuthorizations {
   result: T[];
 }
 
+export interface DashboardResult {
+  active_users: number;
+  pending_users: number;
+  activeStations: number;
+  inactiveStations: number;
+  active_rfid: number;
+  inactive_rfid: number;
+  stations: DataResult<ChargingStation>;
+  sessions: TransactionDataResult;
+}
+
 export interface RegistrationTokenDataResult extends DataResult<RegistrationToken> {
 }
 

@@ -15,7 +15,50 @@ import { ChargingStationTemplate } from '../types/ChargingStationTemplate';
 import { Company } from '../types/Company';
 import CentralSystemServerConfiguration from '../types/configuration/CentralSystemServerConfiguration';
 import { IntegrationConnection, UserConnection } from '../types/Connection';
-import { ActionResponse, ActionsResponse, AssetDataResult, AssetInErrorDataResult, BillingAccountDataResult, BillingInvoiceDataResult, BillingOperationResult, BillingPaymentMethodDataResult, BillingTaxDataResult, BillingTransferDataResult, CarCatalogDataResult, CarDataResult, ChargingProfileDataResult, ChargingStationDataResult, ChargingStationInErrorDataResult, ChargingStationTemplateDataResult, CheckAssetConnectionResponse, CheckBillingConnectionResponse, CompanyDataResult, DataResult, LogDataResult, LoginResponse, OCPIGenerateLocalTokenResponse, OCPIJobStatusesResponse, OCPIPingResponse, OICPJobStatusesResponse, OICPPingResponse, OcpiEndpointDataResult, Ordering, Paging, PricingDefinitionDataResult, RegistrationTokenDataResult, SiteAreaDataResult, SiteDataResult, SiteUserDataResult, StatisticDataResult, TagDataResult, TransactionDataResult, TransactionInErrorDataResult, UserDataResult, UserSiteDataResult } from '../types/DataResult';
+import {
+  ActionResponse,
+  ActionsResponse,
+  AssetDataResult,
+  AssetInErrorDataResult,
+  BillingAccountDataResult,
+  BillingInvoiceDataResult,
+  BillingOperationResult,
+  BillingPaymentMethodDataResult,
+  BillingTaxDataResult,
+  BillingTransferDataResult,
+  CarCatalogDataResult,
+  CarDataResult,
+  ChargingProfileDataResult,
+  ChargingStationDataResult,
+  ChargingStationInErrorDataResult,
+  ChargingStationTemplateDataResult,
+  CheckAssetConnectionResponse,
+  CheckBillingConnectionResponse,
+  CompanyDataResult,
+  DataResult,
+  LogDataResult,
+  LoginResponse,
+  OCPIGenerateLocalTokenResponse,
+  OCPIJobStatusesResponse,
+  OCPIPingResponse,
+  OICPJobStatusesResponse,
+  OICPPingResponse,
+  OcpiEndpointDataResult,
+  Ordering,
+  Paging,
+  PricingDefinitionDataResult,
+  RegistrationTokenDataResult,
+  SiteAreaDataResult,
+  SiteDataResult,
+  SiteUserDataResult,
+  StatisticDataResult,
+  TagDataResult,
+  TransactionDataResult,
+  TransactionInErrorDataResult,
+  UserDataResult,
+  UserSiteDataResult,
+  DashboardResult
+} from '../types/DataResult';
 import { EndUserLicenseAgreement } from '../types/Eula';
 import { FilterParams, Image, KeyValue } from '../types/GlobalType';
 import { Log } from '../types/Log';
@@ -2993,6 +3036,19 @@ export class CentralServerService {
       {
         headers: this.buildHttpHeaders(),
         params,
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public getDashboard(): Observable<DashboardResult> {
+    // Verify init
+    this.checkInit();
+    // Execute the REST service
+    return this.httpClient.get<DashboardResult>(this.buildRestEndpointUrl(RESTServerRoute.REST_DASHBOARD),
+      {
+        headers: this.buildHttpHeaders(),
       })
       .pipe(
         catchError(this.handleHttpError),
