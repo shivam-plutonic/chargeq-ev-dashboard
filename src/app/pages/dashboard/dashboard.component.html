@@ -4,8 +4,7 @@
       <mat-card class="half-card">
         <mat-card-title class="card-head">
           <span style="display:flex;align-items: center">User Analysis</span>
-          <button (click)="redirectToRoute('/users')" mat-raised-button color="primary">Show All
-          </button>
+          <button (click)="redirectToRoute('/users')" mat-raised-button color="primary">Show All</button>
         </mat-card-title>
         <mat-card-content>
           <div class="row">
@@ -33,15 +32,12 @@
         <mat-card-title class="card-head">
           <span
             style="display:flex;align-items: center">Total Chargers: {{(dashboardData?.activeStations ?? 0) + (dashboardData?.inactiveStations ?? 0)}}</span>
-          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">
-            Show All
-          </button>
+          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">Show All</button>
         </mat-card-title>
         <mat-card-content>
           <div class="row">
             <div class="col-md-4 p-1">
-              <mat-card class="grey-card" style="cursor: pointer"
-                        (click)="redirectToRoute('/charging-station')">
+              <mat-card class="grey-card" style="cursor: pointer" (click)="redirectToRoute('/charging-station')">
                 <mat-card-content style="text-align: center">
                   <span
                     style="display: block; font-size: 48px; color: green; margin-top: 24px; margin-bottom: 24px; align-items: end;">
@@ -53,8 +49,7 @@
               </mat-card>
             </div>
             <div class="col-md-4 p-1">
-              <mat-card class="grey-card" style="cursor: pointer"
-                        (click)="redirectToRoute('/charging-station')">
+              <mat-card class="grey-card" style="cursor: pointer" (click)="redirectToRoute('/charging-station')">
                 <mat-card-content style="text-align: center">
                   <span
                     style="display: block; font-size: 48px; color: red; margin-top: 24px; margin-bottom: 24px; align-items: end;">
@@ -66,8 +61,7 @@
               </mat-card>
             </div>
             <div class="col-md-4 p-1">
-              <mat-card class="grey-card" style="cursor: pointer"
-                        (click)="redirectToRoute('/transactions#inprogress')">
+              <mat-card class="grey-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#inprogress')">
                 <mat-card-content style="text-align: center">
                   <span
                     style="display: block; font-size: 48px; color: #1976d2; margin-top: 24px; margin-bottom: 24px; align-items: end;">
@@ -85,8 +79,7 @@
   </div>
   <div class="row">
     <div class="col-md-3 p-2">
-      <mat-card class="detail-card" style="cursor: pointer"
-                (click)="redirectToRoute('/charging-station')">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/charging-station')">
         <mat-card-content>
           <div class="row">
             <div class="col-md-3 detail-icon">
@@ -102,8 +95,7 @@
       </mat-card>
     </div>
     <div class="col-md-3 p-2">
-      <mat-card class="detail-card" style="cursor: pointer"
-                (click)="redirectToRoute('/transactions#history')">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
         <mat-card-content>
           <div class="row">
             <div class="col-md-3 detail-icon">
@@ -121,8 +113,7 @@
       </mat-card>
     </div>
     <div class="col-md-3 p-2">
-      <mat-card class="detail-card" style="cursor: pointer"
-                (click)="redirectToRoute('/transactions#history')">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
         <mat-card-content>
           <div class="row">
             <div class="col-md-3 detail-icon">
@@ -131,15 +122,13 @@
             <div class="col-md-9 detail-title">Total Sessions</div>
           </div>
           <div class="row">
-            <div
-              class="col-md-12 detail-value">{{dashboardData?.completed_transactions?.count ?? 0}}</div>
+            <div class="col-md-12 detail-value">{{dashboardData?.completed_transactions?.count ?? 0}}</div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="col-md-3 p-2">
-      <mat-card class="detail-card" style="cursor: pointer"
-                (click)="redirectToRoute('/transactions#history')">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
         <mat-card-content>
           <div class="row">
             <div class="col-md-3 detail-icon">
@@ -162,17 +151,14 @@
       <mat-card style="min-height: 452px">
         <mat-card-title class="card-head">
           <span style="display:flex;align-items: center">Charging Stations</span>
-          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">
-            Show All
-          </button>
+          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">Show All</button>
         </mat-card-title>
         <mat-card-content>
           <mat-card style="padding: 4px 14px;margin-top: 8px;"
                     *ngFor="let item of (dashboardData?.stations?.result ?? [])">
             <mat-card-content>
               <div class="row">
-                <div class="col-md-3 p-1" style="display: block;cursor: pointer;"
-                     (click)="redirectToRoute('/transactions#inprogress')">
+                <div class="col-md-3 p-1" style="display: block;">
                   <mat-icon fontIcon="kitchen" size="16"></mat-icon>
                   <span class="station-name">{{item.id}}</span>
                 </div>
@@ -197,8 +183,7 @@
                 </div>
                 <div class="col-md-4 p-1">
                   <span
-                    class="other-data-2">Instant Power: {{calculateTotalWatts(item.connectors)}}
-                    /{{(item.maximumPower / 100).toFixed() / 10}}
+                    class="other-data-2">Instant Power: {{calculateTotalWatts(item.connectors)}}/{{(item.maximumPower / 100).toFixed() / 10}}
                     kW</span>
                 </div>
                 <div class="col-md-3 p-1" style="text-align: end">
@@ -227,9 +212,7 @@
       <mat-card style="min-height: 452px">
         <mat-card-title class="card-head">
           <span style="display:flex;align-items: center">Active Sessions</span>
-          <button (click)="redirectToRoute('/transactions#inprogress')" mat-raised-button
-                  color="primary">Show All
-          </button>
+          <button (click)="redirectToRoute('/transactions#inprogress')" mat-raised-button color="primary">Show All</button>
         </mat-card-title>
         <mat-card-content>
           <mat-card style="padding: 4px 14px;margin-top: 8px;"
@@ -238,7 +221,7 @@
               <div class="row">
                 <div class="col-md-3 p-1" style="display: block;padding-left: 0;padding-right: 0;">
                   <mat-icon fontIcon="kitchen" size="16"></mat-icon>
-                  <span class="station-name">{{item.chargeBoxID}}</span>
+                  <span class="station-name" style="cursor: pointer"  (click)="redirectToRoute('/transactions#inprogress')">{{item.chargeBoxID}}</span>
                 </div>
                 <div class="col-md-3 p-1" style="display: block;text-align: center">
                   <mat-icon fontIcon="place" size="16"></mat-icon>
@@ -254,23 +237,18 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3"
-                     style="display: block;padding-left: 2px;padding-right: 0;padding-top: 4px;">
+                <div class="col-md-3" style="display: block;padding-left: 2px;padding-right: 0;padding-top: 4px;">
                   <span
-                    class="other-data-2">Consumption: {{(item?.currentTotalConsumptionWh / 1000).toFixed(2)}}
-                    kWh</span>
+                    class="other-data-2">Consumption: {{(item?.currentTotalConsumptionWh / 1000).toFixed(2)}}kWh</span>
                 </div>
                 <div class="col-md-3 p-1" style="display: block;text-align: center">
-                  <span
-                    class="other-data-2">Power: {{(item?.currentInstantWatts / 1000).toFixed(2)}}
-                    kW</span>
+                  <span class="other-data-2">Power: {{(item?.currentInstantWatts / 1000).toFixed(2)}}kW</span>
                 </div>
                 <div class="col-md-2 p-1">
                   <span class="other-data-2">Price: ₹{{item?.roundedPrice}}</span>
                 </div>
                 <div class="col-md-4 p-1">
-                  <span
-                    class="other-data-2">User: {{item?.user?.name}} {{item?.user?.firstName}}</span>
+                  <span class="other-data-2">User: {{item?.user?.name}} {{item?.user?.firstName}}</span>
                 </div>
               </div>
             </mat-card-content>
