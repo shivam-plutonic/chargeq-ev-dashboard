@@ -51,7 +51,13 @@ export class DashboardComponent {
   public redirectToRoute(route) {
     void this.router.navigateByUrl(route);
   }
-
+  public calculateTotalWatts(connectors): number {
+    let sum = 0;
+    connectors.forEach((connector) => {
+      sum += connector.currentInstantWatts;
+    });
+    return parseFloat((sum / 100).toFixed()) / 10;
+  }
 
   // eslint-disable-next-line @angular-eslint/contextual-lifecycle,@angular-eslint/use-lifecycle-interface
   public ngOnInit(): void {

@@ -96,6 +96,7 @@ export interface DashboardResult {
   inactiveStations: number;
   active_rfid: number;
   inactive_rfid: number;
+  completed_transactions: TransactionDataResult;
   stations: DataResult<ChargingStation>;
   sessions: TransactionDataResult;
 }
