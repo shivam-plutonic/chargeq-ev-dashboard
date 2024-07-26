@@ -1,0 +1,68 @@
+<div class="wrapper wrapper-full-page">
+  <div class="page-header login-page header-filter" filter-color="black">
+    <div class="container">
+      <div class="col-lg-6 ms-auto me-auto">
+        <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+          <div class="card card-login card-hidden">
+            <div class="card-header card-header-primary text-center h-25">
+              <div class="social-line">
+                <img class="big-card-logo mb-2" [src]="tenantLogo" />
+              </div>
+              <h4 class="card-title text-center">{{ "authentication.sign_in" | translate }}</h4>
+            </div>
+            <div class="card-body">
+              <div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <mat-icon>phone</mat-icon>
+                      <mat-form-field class="ms-2">
+                        <input id="mobile-number-field" matInput type="text"
+                               placeholder="{{ 'authentication.mobile' | translate }}"
+                               autocomplete="tel" [formControl]="formGroup.get('mobile')" required>
+                        <mat-error *ngIf="formGroup.get('mobile').errors?.pattern">{{ "authentication.invalid_mobile_number" | translate }}</mat-error>
+                        <mat-error *ngIf="formGroup.get('mobile').errors?.required">{{ "general.mandatory_field" | translate }}</mat-error>
+                      </mat-form-field>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="otpRequested">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <mat-icon>lock_outline</mat-icon>
+                      <mat-form-field class="ms-2">
+                        <input id="otp-field" matInput type="text"
+                               placeholder="{{ 'authentication.otp' | translate }}"
+                               autocomplete="one-time-code" [formControl]="formGroup.get('otp')" required>
+                        <mat-error *ngIf="formGroup.get('otp').errors?.pattern">{{ "authentication.invalid_otp" | translate }}</mat-error>
+                        <mat-error *ngIf="formGroup.get('otp').errors?.required">{{ "general.mandatory_field" | translate }}</mat-error>
+                      </mat-form-field>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input formControlName="acceptEula" type="checkbox" class="form-check-input">
+                      {{ "authentication.accept_eula" | translate }}
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer justify-content-center">
+              <button type="submit" class="btn btn-primary btn-wd btn-lg"> button <!--{{ //!otpRequested ? "authentication.request_otp" | translate : "authentication.verify_otp" | translate }} --> </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -499,6 +499,8 @@ export enum ServerAction {
 // RESTful API
 export enum RESTServerRoute {
   REST_SIGNIN = 'signin',
+  REST_SIGNIN_OTP = 'signinotp',
+  REST_VERIFY_OTP = 'verifyotp',
   REST_SIGNON = 'signon',
   REST_SIGNOUT = 'signout',
   REST_PASSWORD_RESET = 'password/reset',

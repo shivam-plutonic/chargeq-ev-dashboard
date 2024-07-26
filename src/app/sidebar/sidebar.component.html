@@ -40,6 +40,13 @@
               <span class="sidebar-normal">{{'users.profile' | translate}}</span>
             </a>
           </li>
+          <li *ngIf="canEditProfile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+              class="nav-item">
+            <a [routerLink]="['/users/wallet' ]" class="nav-link">
+              <span class="sidebar-mini"><i class="material-icons sidebar-mini-icons">portrait</i></span>
+              <span class="sidebar-normal">{{'users.my_wallet' | translate}}</span>
+            </a>
+          </li>
           <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
             <a href="javascript:void(0)" (click)="logout()" class="nav-link">
               <span class="sidebar-mini"><i class="material-icons sidebar-mini-icons">lock</i></span>

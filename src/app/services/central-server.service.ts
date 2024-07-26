@@ -2075,6 +2075,36 @@ export class CentralServerService {
       );
   }
 
+  public requestOtp(user: any): Observable<void> {
+    // Verify init
+    this.checkInit();
+    // Set the tenant
+    user['tenant'] = this.windowService.getSubdomain();
+    // Execute
+    return this.httpClient.post<void>(`${this.restServerAuthURL}/${RESTServerRoute.REST_SIGNIN_OTP}`, user,
+      {
+        headers: this.buildHttpHeaders(),
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public verifyOtp(user: any): Observable<LoginResponse> {
+    // Verify init
+    this.checkInit();
+    // Set the tenant
+    user['tenant'] = this.windowService.getSubdomain();
+    // Execute
+    return this.httpClient.post<LoginResponse>(`${this.restServerAuthURL}/${RESTServerRoute.REST_VERIFY_OTP}`, user,
+      {
+        headers: this.buildHttpHeaders(),
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
   public loginSucceeded(token: string): void {
     // Keep the token in local storage
     this.currentUserToken = token;

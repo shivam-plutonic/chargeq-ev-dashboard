@@ -34,6 +34,7 @@ export interface LoginResponse extends ActionResponse {
   token: string;
 }
 
+
 export interface OCPITriggerJobsResponse extends ActionResponse {
   tokens: OCPIJobStatusesResponse;
   locations: OCPIJobStatusesResponse;
