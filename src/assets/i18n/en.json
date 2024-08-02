@@ -1,4 +1,17 @@
 {
+  "wallet": {
+    "tabs":  {
+      "balance" : "Balance",
+      "transactions": "Transactions"
+    },
+    "balance": {
+      "title": "Wallet Balance",
+      "recharge": "Recharge",
+      "amount": "ZF Coins",
+      "recahrgeAmount": "Enter the Amount"
+    }
+
+  },
   "general": {
     "generate": "Generate",
     "captcha_text_1": "This site is protected by reCAPTCHA and the Google",

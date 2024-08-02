@@ -1,4 +1,5 @@
 import { Address } from './Address';
+import Wallet from './wallet';
 import { UserAuthorizationActions } from './Authorization';
 import { BillingUserData } from './Billing';
 import { Car } from './Car';
@@ -21,6 +22,7 @@ export interface User extends TableData, CreatedUpdatedProps, UserAuthorizationA
   notificationsActive: boolean;
   notifications: UserNotifications;
   address: Address;
+  wallet: Wallet;
   iNumber: string;
   costCenter: boolean;
   status: string;

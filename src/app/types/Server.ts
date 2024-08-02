@@ -509,6 +509,11 @@ export enum RESTServerRoute {
   REST_MAIL_CHECK = 'mail/check',
   REST_MAIL_RESEND = 'mail/resend',
 
+  WALLET_BALANCE = 'wallet-balance',
+  WALLET_TRANSACTION = 'wallet-transaction',
+  WALLET_RECHARGE = 'wallet-recharge',
+  TRANSACTION_STATUS = 'transaction-status',
+
   REST_CHARGING_STATIONS = 'charging-stations',
   REST_CHARGING_STATION = 'charging-stations/:id',
 

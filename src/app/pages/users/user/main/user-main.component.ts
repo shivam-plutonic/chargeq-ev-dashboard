@@ -54,6 +54,7 @@ export class UserMainComponent implements OnInit, OnChanges {
   public locale!: AbstractControl;
   public technical: AbstractControl;
   public freeAccess: AbstractControl;
+  // public wallet!: AbstractControl;
 
   private currentLocale!: string;
 

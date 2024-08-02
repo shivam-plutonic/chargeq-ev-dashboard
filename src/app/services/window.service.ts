@@ -35,7 +35,7 @@ export class WindowService {
   }
 
   public getSubdomain(): string {
-    console.log('6');
+    // console.log('6');
     return 'pluto';
     const urlParsed = parse(this.window.location.host);
     console.log(urlParsed);
@@ -98,7 +98,6 @@ export class WindowService {
   }
 
   public deleteUrlParameter(name: string): void {
-    console.log('11');
     // Parse the query string
     const urlSearchParams = new URLSearchParams(window.location.search);
     // Delete
@@ -108,17 +107,14 @@ export class WindowService {
   }
 
   public clearUrlParameter() {
-    console.log('12');
     this.setUrlQueryParams();
   }
 
   public openUrl(url: string) {
-    console.log('13');
     this.window.open(url, '_blank');
   }
 
   private setUrlQueryParams(queryParams?: string) {
-    console.log('14');
     // Set the Query params
     if (history.pushState) {
       // Without page reload

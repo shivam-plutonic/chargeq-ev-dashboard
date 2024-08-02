@@ -3520,6 +3520,117 @@ export class CentralServerService {
       );
   }
 
+  // wallet api
+
+
+  public getWalletBalance(userId : string): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userId) {
+      return EMPTY;
+    }
+    console.log(userId, 'inside getwallet valance');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ id : userId, tenant: tenant};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_BALANCE);
+    console.log(url, 'url');
+    return this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public getWalletTransaction(userID : string, startDate: string, endDate: string): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userID) {
+      return EMPTY;
+    }
+    console.log(userID, 'inside getwallet transaction');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+
+    const params ={ userID: userID, tenant: tenant, startDate:startDate, endDate: endDate};
+    console.log(params, 'itw transaction');
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_TRANSACTION);
+    return this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public rechargeWallet(userID : string, rechargeAmount: number): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userID) {
+      return EMPTY;
+    }
+    console.log(userID, 'inside wallete Recharge');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ userID: userID, tenant: tenant, amount :rechargeAmount};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_RECHARGE);
+    // console.log(url, 'url');
+    const data=  this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+    console.log(data);
+    return data;
+  }
+
+
+  public checkTransactionStatus(orderId : string,userID : string, ): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!orderId) {
+      return EMPTY;
+    }
+    console.log(orderId, 'inside check status Recharge');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ orderId: orderId, userId: userID,  tenant: tenant};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.TRANSACTION_STATUS);
+    // console.log(url, 'url');
+    const data=  this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+    console.log(data);
+    return data;
+  }
+
+
+
+
   public getChargingStationTemplates(params: FilterParams,
     paging: Paging = Constants.DEFAULT_PAGING, ordering: Ordering[] = []): Observable<ChargingStationTemplateDataResult> {
     // Verify init
