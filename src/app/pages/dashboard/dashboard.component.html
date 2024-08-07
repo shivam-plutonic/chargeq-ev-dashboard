@@ -1,0 +1,270 @@
+<div class="main-content flex-grow-1">
+  <div class="row">
+    <div class="col-md-6 p-2">
+      <mat-card class="half-card">
+        <mat-card-title class="card-head">
+          <span style="display:flex;align-items: center">User Analysis</span>
+          <button (click)="redirectToRoute('/users')" mat-raised-button color="primary">Show All</button>
+        </mat-card-title>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-6">
+              <span class="data-label">Active Users:</span><span
+              class="data-value-green">{{dashboardData?.active_users ?? 0}}</span><br/>
+              <span class="data-label">Pending Users:</span><span
+              class="data-value-blue">{{dashboardData?.pending_users ?? 0}}</span><br/>
+              <span class="data-label">Active RFID's:</span><span
+              class="data-value-green">{{dashboardData?.active_rfid ?? 0}}</span><br/>
+              <span class="data-label">Inactive RFID's:</span><span
+              class="data-value-blue">{{dashboardData?.inactive_rfid ?? 0}}</span><br/>
+            </div>
+            <div class="col-md-6">
+              <canvas id="user_canvas"></canvas>
+              <div class="inner-data"><b>{{dashboardData?.active_users ?? 0}}</b><br>Active Users
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-6 p-2">
+      <mat-card class="half-card">
+        <mat-card-title class="card-head">
+          <span
+            style="display:flex;align-items: center">Total Chargers: {{(dashboardData?.activeStations ?? 0) + (dashboardData?.inactiveStations ?? 0)}}</span>
+          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">Show All</button>
+        </mat-card-title>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-4 p-1">
+              <mat-card class="grey-card" style="cursor: pointer" (click)="redirectToRoute('/charging-station')">
+                <mat-card-content style="text-align: center">
+                  <span
+                    style="display: block; font-size: 48px; color: green; margin-top: 24px; margin-bottom: 24px; align-items: end;">
+                    {{dashboardData?.activeStations ?? 0}}
+                  </span><br/>
+                  <mat-icon fontIcon="check_circle" style="color: green"></mat-icon>
+                  <span style="font-size: 18px">Active</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-md-4 p-1">
+              <mat-card class="grey-card" style="cursor: pointer" (click)="redirectToRoute('/charging-station')">
+                <mat-card-content style="text-align: center">
+                  <span
+                    style="display: block; font-size: 48px; color: red; margin-top: 24px; margin-bottom: 24px; align-items: end;">
+                    {{dashboardData?.inactiveStations ?? 0}}
+                  </span><br/>
+                  <mat-icon fontIcon="not_interested" style="color: red"></mat-icon>
+                  <span style="font-size: 18px">Inactive</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-md-4 p-1">
+              <mat-card class="grey-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#inprogress')">
+                <mat-card-content style="text-align: center">
+                  <span
+                    style="display: block; font-size: 48px; color: #1976d2; margin-top: 24px; margin-bottom: 24px; align-items: end;">
+                    {{dashboardData?.sessions?.count ?? 0}}
+                  </span><br/>
+                  <mat-icon fontIcon="import_export" style="color: #1976d2"></mat-icon>
+                  <span style="font-size: 18px">Charging</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 p-2">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/charging-station')">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-3 detail-icon">
+              <mat-icon fontIcon="local_gas_station"></mat-icon>
+            </div>
+            <div class="col-md-9 detail-title">Total Chargers</div>
+          </div>
+          <div class="row">
+            <div
+              class="col-md-12 detail-value">{{(dashboardData?.activeStations ?? 0) + (dashboardData?.inactiveStations ?? 0)}}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3 p-2">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-3 detail-icon">
+              <mat-icon fontIcon="flash_on"></mat-icon>
+            </div>
+            <div class="col-md-9 detail-title">Energy Delivered</div>
+          </div>
+          <div class="row">
+            <div
+              class="col-md-12 detail-value">{{((dashboardData?.completed_transactions?.stats?.totalConsumptionWattHours ?? 0) / 1000).toFixed(1)}}
+              KWh
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3 p-2">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-3 detail-icon">
+              <mat-icon fontIcon="beenhere"></mat-icon>
+            </div>
+            <div class="col-md-9 detail-title">Total Sessions</div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 detail-value">{{dashboardData?.completed_transactions?.count ?? 0}}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3 p-2">
+      <mat-card class="detail-card" style="cursor: pointer"  (click)="redirectToRoute('/transactions#history')">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-3 detail-icon">
+              <mat-icon fontIcon="access_time"></mat-icon>
+            </div>
+            <div class="col-md-9 detail-title">Charging Hours</div>
+          </div>
+          <div class="row">
+            <div
+              class="col-md-12 detail-value">{{((dashboardData?.completed_transactions?.stats?.totalDurationSecs ?? 0) / 3600).toFixed()}}
+              Hrs
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 p-2">
+      <mat-card style="min-height: 452px">
+        <mat-card-title class="card-head">
+          <span style="display:flex;align-items: center">Charging Stations</span>
+          <button (click)="redirectToRoute('/charging-station')" mat-raised-button color="primary">Show All</button>
+        </mat-card-title>
+        <mat-card-content>
+          <mat-card style="padding: 4px 14px;margin-top: 8px;"
+                    *ngFor="let item of (dashboardData?.stations?.result ?? [])">
+            <mat-card-content>
+              <div class="row">
+                <div class="col-md-3 p-1" style="display: block;">
+                  <mat-icon fontIcon="kitchen" size="16"></mat-icon>
+                  <span class="station-name">{{item.id}}</span>
+                </div>
+                <div class="col-md-3 p-1" style="display: block;">
+                  <mat-icon fontIcon="place" size="16"></mat-icon>
+                  <span class="other-data">{{item?.site?.name}}</span>
+                </div>
+                <div class="col-md-3 p-1">
+                  <span class="other-data">{{item?.siteArea?.name}}</span>
+                </div>
+                <div class="col-md-3 p-1" style="text-align: end">
+                  <span
+                    class="{{item.inactive?'fail-tag': 'success-tag'}}">{{item.inactive ? 'Offline' : 'Online'}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 p-1" style="display: block;">
+                  <span class="other-data-2">{{item.chargePointModel}}</span>
+                </div>
+                <div class="col-md-2 p-1" style="display: block;text-align: center">
+                  <span class="other-data-2">Public: {{item.public ? 'Yes' : 'No'}}</span>
+                </div>
+                <div class="col-md-4 p-1">
+                  <span
+                    class="other-data-2">Instant Power: {{calculateTotalWatts(item.connectors)}}/{{(item.maximumPower / 100).toFixed() / 10}}
+                    kW</span>
+                </div>
+                <div class="col-md-3 p-1" style="text-align: end">
+                  <span class="other-data-2">OCPP: {{item.ocppVersion}}
+                    / {{item.ocppProtocol}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-6 p-2">
+      <mat-card style="min-height: 452px">
+        <mat-card-title class="card-head">
+          <span style="display:flex;align-items: center">Energy Utilization</span>
+        </mat-card-title>
+        <mat-card-content>
+          <canvas id="energy" style="min-height: 340px;margin-top: 20px"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 p-2">
+      <mat-card style="min-height: 452px">
+        <mat-card-title class="card-head">
+          <span style="display:flex;align-items: center">Active Sessions</span>
+          <button (click)="redirectToRoute('/transactions#inprogress')" mat-raised-button color="primary">Show All</button>
+        </mat-card-title>
+        <mat-card-content>
+          <mat-card style="padding: 4px 14px;margin-top: 8px;"
+                    *ngFor="let item of (dashboardData?.sessions?.result ?? [])">
+            <mat-card-content>
+              <div class="row">
+                <div class="col-md-3 p-1" style="display: block;padding-left: 0;padding-right: 0;">
+                  <mat-icon fontIcon="kitchen" size="16"></mat-icon>
+                  <span class="station-name" style="cursor: pointer"  (click)="redirectToRoute('/transactions#inprogress')">{{item.chargeBoxID}}</span>
+                </div>
+                <div class="col-md-3 p-1" style="display: block;text-align: center">
+                  <mat-icon fontIcon="place" size="16"></mat-icon>
+                  <span class="other-data">{{(item?.site?.name)}}</span>
+                </div>
+                <div class="col-md-3 p-1">
+                  <mat-icon fontIcon="date_range" size="16"></mat-icon>
+                  <span class="other-data">{{formatDate(item.timestamp)}}</span>
+                </div>
+                <div class="col-md-3 p-1">
+                  <mat-icon fontIcon="alarm_clock" size="16"></mat-icon>
+                  <span class="other-data">{{formatTime(item.timestamp)}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3" style="display: block;padding-left: 2px;padding-right: 0;padding-top: 4px;">
+                  <span
+                    class="other-data-2">Consumption: {{(item?.currentTotalConsumptionWh / 1000).toFixed(2)}}kWh</span>
+                </div>
+                <div class="col-md-3 p-1" style="display: block;text-align: center">
+                  <span class="other-data-2">Power: {{(item?.currentInstantWatts / 1000).toFixed(2)}}kW</span>
+                </div>
+                <div class="col-md-2 p-1">
+                  <span class="other-data-2">Price: ₹{{item?.roundedPrice}}</span>
+                </div>
+                <div class="col-md-4 p-1">
+                  <span class="other-data-2">User: {{item?.user?.name}} {{item?.user?.firstName}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-6 p-2">
+      <mat-card style="min-height: 452px">
+        <mat-card-title class="card-head">
+          <span style="display:flex;align-items: center">Revenue</span>
+        </mat-card-title>
+        <mat-card-content>
+          <canvas id="revenue" style="min-height: 340px;margin-top: 20px"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

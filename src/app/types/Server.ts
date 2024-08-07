@@ -499,6 +499,8 @@ export enum ServerAction {
 // RESTful API
 export enum RESTServerRoute {
   REST_SIGNIN = 'signin',
+  REST_SIGNIN_OTP = 'signinotp',
+  REST_VERIFY_OTP = 'verifyotp',
   REST_SIGNON = 'signon',
   REST_SIGNOUT = 'signout',
   REST_PASSWORD_RESET = 'password/reset',
@@ -595,6 +597,7 @@ export enum RESTServerRoute {
   REST_ASSET_CONSUMPTIONS = 'assets/:id/consumptions',
   REST_ASSET_IMAGE = 'assets/:id/image',
 
+  REST_DASHBOARD = 'dashboard',
   REST_CARS = 'cars',
   REST_CAR = 'cars/:id',
   REST_CAR_CATALOGS = 'car-catalogs',

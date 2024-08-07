@@ -43,6 +43,6 @@ export class Constants {
   public static readonly SELECT_ALL = 'A';
 
   /* App Info for STRIPE */
-  public static readonly STRIPE_APP_NAME = 'Open e-Mobility';
+  public static readonly STRIPE_APP_NAME = 'EV CMS';
   public static readonly STRIPE_PARTNER_ID = 'TECH-000685';
 }
