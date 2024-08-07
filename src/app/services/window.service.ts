@@ -35,7 +35,10 @@ export class WindowService {
   }
 
   public getSubdomain(): string {
+    // console.log('6');
+    return 'pluto';
     const urlParsed = parse(this.window.location.host);
+    console.log(urlParsed);
     return urlParsed.publicSuffix === 'localhost' ? urlParsed.domainWithoutSuffix ?? '' : urlParsed.subdomain;
   }
 

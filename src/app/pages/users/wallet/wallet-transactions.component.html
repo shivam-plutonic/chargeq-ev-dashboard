@@ -1,0 +1,98 @@
+<!--<div class="wallet-transaction" style="width: 100%; margin: 0 auto;">-->
+<!--  <h2 style="margin-bottom: 20px;">Wallet Transaction History</h2>-->
+
+<!--  <form [formGroup]="filterForm" (ngSubmit)="fetchWalletTransaction()" style="display: flex; justify-content: space-between; margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">-->
+<!--    <div style="display: flex; flex-direction: column; margin-right: 10px;">-->
+<!--      <label for="startDate" style="margin-bottom: 5px;">Start Date:</label>-->
+<!--      <input type="date" id="startDate" formControlName="startDate" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"/>-->
+<!--    </div>-->
+<!--    <div style="display: flex; flex-direction: column; margin-right: 10px;">-->
+<!--      <label for="endDate" style="margin-bottom: 5px;">End Date:</label>-->
+<!--      <input type="date" id="endDate" formControlName="endDate" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"/>-->
+<!--    </div>-->
+<!--    <button type="submit" style="  margin:10px;    width:140px; height: 50px;padding: 10px 15px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;">Filter</button>-->
+<!--  </form>-->
+
+<!--  <table style="width: 100%; border-collapse: collapse;">-->
+<!--    <thead>-->
+<!--    <tr style="background-color: #f2f2f2;">-->
+<!--      <th style="border: 1px solid #ddd; padding: 8px;">Date</th>-->
+<!--      <th style="border: 1px solid #ddd; padding: 8px;">Amount</th>-->
+<!--      <th style="border: 1px solid #ddd; padding: 8px;">Type</th>-->
+<!--      <th style="border: 1px solid #ddd; padding: 8px;">Description</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let transaction of transactions">-->
+<!--      <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.timestamp | date: 'short' }}</td>-->
+<!--      <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.amount | currency }}</td>-->
+<!--      <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.type }}</td>-->
+<!--      <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.description }}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+<div class="wallet-transaction" style="width: 100%; margin: 0 auto;">
+  <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <div>
+      <h2 style="margin-bottom: 20px;">Wallet Transaction History</h2>
+      <div *ngIf="filterForm.errors?.dateRangeInvalid"
+           style="color: red; margin: 30px 10px 0px 0px;">End Date must be later than Start Date.
+      </div>
+    </div>
+    <!-- Filter Button -->
+    <div>
+      <button *ngIf="!showFilters" (click)="showFilters = true"
+              style="float: right; margin-bottom: 20px; width: 120px; height: 40px; padding: 10px 15px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;">
+        Filter
+      </button>
+      <button *ngIf="showFilters" (click)="resetFilters()"
+              style="float: right; margin-bottom: 20px; width: 140px; height: 40px; padding: 10px 15px; border: none; background-color: #6c757d; color: white; border-radius: 4px; cursor: pointer;">
+        Reset Filter
+      </button>
+    </div>
+  </div>
+  <!-- Filter Form -->
+  <form *ngIf="showFilters" [formGroup]="filterForm" (ngSubmit)="applyFilters()"
+        style="width: 100%; display: flex; justify-content: start; margin-bottom: 0px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+    <div style="display: flex; flex-direction: column; margin-right: 10px;">
+      <label for="startDate" style="margin-bottom: 5px;">Start Date:</label>
+      <input type="date" id="startDate" formControlName="startDate"
+             style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"/>
+    </div>
+    <div style="display: flex; flex-direction: column; margin-right: 10px;">
+      <label for="endDate" style="margin-bottom: 5px;">End Date:</label>
+      <input type="date" id="endDate" formControlName="endDate"
+             style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"/>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!filterForm.valid"
+      style="margin: 20px; width: 140px; height: 40px; padding: 10px 15px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;">
+      Apply
+    </button>
+    <!-- Reset Filter Button -->
+  </form>
+
+  <!-- Table with Sticky Header -->
+  <div style="overflow-y: auto; max-height: 400px; border: 1px solid #ddd; border-radius: 4px;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th style="border: 1px solid #ddd; padding: 8px; position: -webkit-sticky; position: sticky; top: 0; background-color: #f2f2f2;">Date</th>
+        <th style="border: 1px solid #ddd; padding: 8px; position: -webkit-sticky; position: sticky; top: 0; background-color: #f2f2f2;">Amount</th>
+        <th style="border: 1px solid #ddd; padding: 8px; position: -webkit-sticky; position: sticky; top: 0; background-color: #f2f2f2;">Type</th>
+        <th style="border: 1px solid #ddd; padding: 8px; position: -webkit-sticky; position: sticky; top: 0; background-color: #f2f2f2;">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.timestamp | date: 'short' }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.amount | currency }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.type }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ transaction.description }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

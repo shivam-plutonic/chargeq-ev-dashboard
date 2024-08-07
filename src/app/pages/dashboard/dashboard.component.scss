@@ -1,0 +1,104 @@
+.half-card {
+  width: 98%;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-label {
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 60%;
+}
+
+.data-value-green {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #2E8B57;
+}
+
+.data-value-blue {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #1976d2;
+}
+
+.grey-card {
+  display: block;
+  background-color: #fafafa;
+  height: 135px;
+}
+
+.detail-card {
+  background-color: #eaeef2;
+  border-radius: 25px;
+  color: #1976d2;
+}
+
+.detail-card:hover {
+  background-color: #1976d2;
+  border-radius: 25px;
+  color: #fff;
+}
+
+.detail-title {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.detail-value {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.detail-icon {
+  margin-top: 6px;
+  text-align: center;
+  transform: scale(2);
+}
+
+.station-name {
+  font-size: 14px;
+  color: #1976d2;
+}
+
+.other-data {
+  font-size: 14px;
+}
+
+.other-data-2 {
+  font-size: 12px;
+}
+
+.success-tag{
+  padding: 8px;
+  background-color: #D3FFE6;
+  color: #2E8B57;
+}
+
+.fail-tag{
+  padding: 8px;
+  background-color: #FFC8BB;
+  color: #FF3E3E;
+}
+
+#user_canvas {
+  margin-top: -40px;
+  margin-bottom: -40px;
+}
+
+.inner-data {
+  text-align: center;
+  font-size: 24px;
+  margin-top: -120px;
+  line-height: 1.2;
+}

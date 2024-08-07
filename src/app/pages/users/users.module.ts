@@ -37,6 +37,9 @@ import { UserDialogComponent } from './user/user-dialog.component';
 import { UserComponent } from './user/user.component';
 import { UsersComponent } from './users.component';
 import { UserRoutes } from './users.routing';
+import {WalletComponent} from './wallet/wallet.component';
+import {WalletBalanceComponent} from "./wallet/wallet-balance.component";
+import {WalletTransactionsComponent} from "./wallet/wallet-transactions.component";
 
 @NgModule({
   imports: [
@@ -52,6 +55,9 @@ import { UserRoutes } from './users.routing';
     FormattersModule,
   ],
   declarations: [
+    WalletBalanceComponent,
+    WalletTransactionsComponent,
+    WalletComponent,
     UserStatusFormatterComponent,
     AppFormatUserStatusPipe,
     UsersListComponent,

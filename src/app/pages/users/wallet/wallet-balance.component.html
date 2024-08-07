@@ -1,0 +1,59 @@
+<!--<div class="wallet-balance">-->
+<!--  <h2>{{'wallet.balance.title' | translate}}</h2>-->
+<!--  <p>{{'wallet.balance.amount' | translate}}: {{wallet.balance | currency}}</p>-->
+
+<!--  <div *ngIf="!showRechargeInput">-->
+<!--    <button mat-raised-button color="primary" (click)="toggleRechargeInput()">-->
+<!--      {{ 'wallet.balance.recharge' | translate }}-->
+<!--    </button>-->
+<!--  </div>-->
+
+<!--  <div *ngIf="showRechargeInput">-->
+<!--    <p>{{ 'wallet.balance.enterAmount' | translate }}</p>-->
+<!--    <form [formGroup]="rechargeForm" class="recharge-form">-->
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>{{ 'wallet.balance.rechargeAmount' | translate }}</mat-label>-->
+<!--        <input matInput formControlName="rechargeAmount" type="text" placeholder="Enter recharge amount">-->
+<!--        <mat-error *ngIf="rechargeForm.get('rechargeAmount')?.invalid">{{ 'wallet.balance.rechargeAmountError' | translate }}</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <button mat-raised-button color="primary" [disabled]="rechargeForm.invalid" (click)="rechargeWallet()">-->
+<!--        {{ 'wallet.balance.recharge' | translate }}-->
+<!--      </button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="wallet-balance">
+  <h2>{{ 'wallet.balance.title' | translate }}</h2>
+  <p>{{ 'wallet.balance.amount' | translate }}: {{ wallet.balance + '  ZF Coins' }}</p>
+
+  <div *ngIf="!showRechargeInput">
+    <button mat-raised-button color="primary" (click)="toggleRechargeInput()">
+      {{ 'wallet.balance.recharge' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="showRechargeInput">
+    <h2>{{ 'wallet.balance.Enter Amount' | translate }}</h2>
+    <form [formGroup]="rechargeForm" class="recharge-form">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'wallet.balance.rechargeAmount' | translate }}</mat-label>
+        <input matInput formControlName="rechargeAmount" type="text" placeholder="Enter recharge amount" (ngModelChange)="onAmountChange($event)">
+        <mat-error *ngIf="rechargeForm.get('rechargeAmount')?.invalid">
+          {{ 'wallet.balance.rechargeAmountError' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngIf="calculatedGST !== null">
+        <p>GST (18%): {{ calculatedGST  }}</p>
+        <p>Amount after GST: {{ adjustedAmount + ' ZF Coins' }}</p>
+      </div>
+
+      <button mat-raised-button color="primary" [disabled]="rechargeForm.invalid" (click)="rechargeWallet()">
+        {{ 'wallet.balance.recharge' | translate }}
+      </button>
+    </form>
+  </div>
+</div>

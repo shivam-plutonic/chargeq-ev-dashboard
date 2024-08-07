@@ -4,6 +4,7 @@ import { RouteGuardService } from '../../guard/route-guard';
 import { Action, Entity } from '../../types/Authorization';
 import { ConcurUserConnectionComponent } from './connections/concur/concur-user-connection.component';
 import { MercedesUserConnectionComponent } from './connections/mercedes/mercedes-user-connection.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { UserComponent } from './user/user.component';
 import { UsersComponent } from './users.component';
 
@@ -26,6 +27,14 @@ export const UserRoutes: Routes = [
   },
   {
     path: 'profile', component: UserComponent, canActivate: [RouteGuardService], data: {
+      auth: {
+        entity: Entity.USER,
+        action: Action.UPDATE,
+      },
+    },
+  },
+  {
+    path: 'wallet', component: WalletComponent, canActivate: [RouteGuardService], data: {
       auth: {
         entity: Entity.USER,
         action: Action.UPDATE,

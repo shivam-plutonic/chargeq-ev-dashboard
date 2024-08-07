@@ -1550,8 +1550,8 @@
     },
     "onboarding": {
       "onboard_action": "Send the onboarding email to the business owner",
-      "onboarding_title": "Open e-Mobility - Account Onboarding",
-      "onboarding_message": "You have been invited to onboard your company as an account connected to the Open e-Mobility platform.",
+      "onboarding_title": "EV CMS - Account Onboarding",
+      "onboarding_message": "You have been invited to onboard your company as an account connected to the EV CMS platform.",
       "onboarding_message_to_proceed": "Click the link below to complete the onboarding process.",
       "onboarding_congratulations": "Congratulations",
       "onboarding_process_completed": "The onboarding of your account has been completed.",
@@ -1656,7 +1656,7 @@
       "update_success": "Nastavení  ceny bylo úspěšně aktualizováno",
       "update_error": "Došlo k chybě při aktualizaci nastavení  ceny, zkontrolujte protokoly",
       "simple_pricing_title": "Built-in Pricing Module",
-      "full_description": "Open E-Mobility provides a pricing module which allows a flexible definition of your company's pricing strategy.",
+      "full_description": "EV CMS provides a pricing module which allows a flexible definition of your company's pricing strategy.",
       "pricing_currency_changed_title": "Modification of the currency",
       "pricing_currency_changed_confirm": [
         "You are about to change the currency. This will force you to reconnect after saving.",

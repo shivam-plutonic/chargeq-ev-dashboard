@@ -1,0 +1,36 @@
+<div [class]="dialogRef ? 'main-content vw-90 vh-90 user-dialog-size' : 'main-content flex-grow-1'">
+  <div class="card card-profile card-testimonial">
+    <form [formGroup]="formGroup" class="form">
+      <mat-tab-group (selectedIndexChange)="updateRoute($event)" [selectedIndex]="activeTabIndex"
+                     animationDuration="0ms" disableRipple="true" class="h-100 mat-tab-info" [class]="dialogRef ? 'mat-tabs-with-actions' : 'mat-tabs-with-close-action'">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>account_balance_wallet</mat-icon>
+            <span>{{'wallet.tabs.balance' | translate}}</span>
+          </ng-template>
+          <div class="card-body mat-tab-dialog-body-content">
+            <app-wallet-balance [formGroup]="formGroup" [wallet]="wallet" [userId]="currentUserID"></app-wallet-balance>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>receipt</mat-icon>
+            <span>{{'wallet.tabs.transactions' | translate}}</span>
+          </ng-template>
+          <div class="card-body mat-tab-dialog-body-content">
+            <app-wallet-transactions [formGroup]="formGroup" [wallet]="wallet" [userId]="currentUserID"></app-wallet-transactions>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+<!--      <div [class]="dialogRef ? 'tabs-actions' : 'tabs-actions-embedded'">-->
+<!--        <button mat-icon-button (click)="saveWallet(formGroup.getRawValue())" title="{{'general.save' | translate}}"-->
+<!--                [disabled]="!formGroup.valid || !formGroup.dirty">-->
+<!--          <mat-icon>save</mat-icon>-->
+<!--        </button>-->
+<!--        <button mat-icon-button *ngIf="dialogRef" (click)="close()" title="{{'general.close' | translate}}">-->
+<!--          <mat-icon>close</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
+    </form>
+  </div>
+</div>

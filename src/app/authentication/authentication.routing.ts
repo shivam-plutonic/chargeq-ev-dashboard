@@ -8,11 +8,17 @@ import { AuthenticationMercedesDataUsageComponent } from './mercedes-data-usage/
 import { AuthenticationRegisterComponent } from './register/authentication-register.component';
 import { AuthenticationResetPasswordComponent } from './reset-password/authentication-reset-password.component';
 import { AuthenticationVerifyEmailComponent } from './verify-email/authentication-verify-email.component';
+import {
+  AuthenticationLoginWithOTPComponent
+} from './login-with-otp/authentication-login-with-otp.component';
 
 export const AuthenticationRoutes: Routes = [
   {
     path: 'login',
     component: AuthenticationLoginComponent,
+  },{
+    path: 'login-with-otp',
+    component: AuthenticationLoginWithOTPComponent,
   }, {
     path: 'define-password',
     component: AuthenticationDefinePasswordComponent,

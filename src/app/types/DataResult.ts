@@ -34,6 +34,7 @@ export interface LoginResponse extends ActionResponse {
   token: string;
 }
 
+
 export interface OCPITriggerJobsResponse extends ActionResponse {
   tokens: OCPIJobStatusesResponse;
   locations: OCPIJobStatusesResponse;
@@ -87,6 +88,18 @@ export interface CheckBillingConnectionResponse extends ActionResponse {
 export interface DataResult<T> extends DataResultAuthorizations {
   count: number;
   result: T[];
+}
+
+export interface DashboardResult {
+  active_users: number;
+  pending_users: number;
+  activeStations: number;
+  inactiveStations: number;
+  active_rfid: number;
+  inactive_rfid: number;
+  completed_transactions: TransactionDataResult;
+  stations: DataResult<ChargingStation>;
+  sessions: TransactionDataResult;
 }
 
 export interface RegistrationTokenDataResult extends DataResult<RegistrationToken> {

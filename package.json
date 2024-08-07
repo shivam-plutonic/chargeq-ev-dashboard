@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/sap-labs-france/ev-dashboard.git"
   },
-  "author": "Open E-Mobility <open-e-mobility@sap.com>",
+  "author": "EV CMS <open-e-mobility@sap.com>",
   "license": "Apache-2.0",
   "licenses": [
     {

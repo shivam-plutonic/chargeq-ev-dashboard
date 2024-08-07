@@ -1,4 +1,17 @@
 {
+  "wallet": {
+    "tabs":  {
+      "balance" : "Balance",
+      "transactions": "Transactions"
+    },
+    "balance": {
+      "title": "Wallet Balance",
+      "recharge": "Recharge",
+      "amount": "ZF Coins",
+      "recahrgeAmount": "Enter the Amount"
+    }
+
+  },
   "general": {
     "generate": "Generate",
     "captcha_text_1": "This site is protected by reCAPTCHA and the Google",
@@ -28,7 +41,7 @@
     "connectors": "Connections",
     "notifications": "Notifications",
     "general": "Main",
-    "app_name": "Open e-Mobility",
+    "app_name": "EV CMS",
     "version": "Version",
     "about_us": "About Us",
     "unexpected_error_backend": "An unexpected error occurred, check the logs",
@@ -553,7 +566,7 @@
     "eula": "End-user License Agreement",
     "must_accept_eula": "You must accept the End-user License Agreement",
     "no_space_in_password": "No space is allowed at the beginning and the end",
-    "title": "Sign in to Open e-Mobility",
+    "title": "Sign in to EV CMS",
     "register": "Register",
     "signup_link": "New user? Register!",
     "signin_link": "Already have an account? Sign in!",
@@ -1550,8 +1563,8 @@
     },
     "onboarding": {
       "onboard_action": "Send the onboarding email to the business owner",
-      "onboarding_title": "Open e-Mobility - Account Onboarding",
-      "onboarding_message": "You have been invited to onboard your company as an account connected to the Open e-Mobility platform.",
+      "onboarding_title": "EV CMS - Account Onboarding",
+      "onboarding_message": "You have been invited to onboard your company as an account connected to the EV CMS platform.",
       "onboarding_message_to_proceed": "Click the link below to complete the onboarding process.",
       "onboarding_congratulations": "Congratulations",
       "onboarding_process_completed": "The onboarding of your account has been completed.",
@@ -1656,7 +1669,7 @@
       "update_success": "Pricing settings have been updated successfully",
       "update_error": "Error occurred while updating the Pricing settings, check the logs",
       "simple_pricing_title": "Built-in Pricing Module",
-      "full_description": "Open E-Mobility provides a pricing module which allows a flexible definition of your company's pricing strategy.",
+      "full_description": "EV CMS provides a pricing module which allows a flexible definition of your company's pricing strategy.",
       "pricing_currency_changed_title": "Modification of the currency",
       "pricing_currency_changed_confirm": [
         "You are about to change the currency. This will force you to reconnect after saving.",

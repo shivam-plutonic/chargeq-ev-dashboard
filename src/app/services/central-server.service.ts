@@ -15,7 +15,50 @@ import { ChargingStationTemplate } from '../types/ChargingStationTemplate';
 import { Company } from '../types/Company';
 import CentralSystemServerConfiguration from '../types/configuration/CentralSystemServerConfiguration';
 import { IntegrationConnection, UserConnection } from '../types/Connection';
-import { ActionResponse, ActionsResponse, AssetDataResult, AssetInErrorDataResult, BillingAccountDataResult, BillingInvoiceDataResult, BillingOperationResult, BillingPaymentMethodDataResult, BillingTaxDataResult, BillingTransferDataResult, CarCatalogDataResult, CarDataResult, ChargingProfileDataResult, ChargingStationDataResult, ChargingStationInErrorDataResult, ChargingStationTemplateDataResult, CheckAssetConnectionResponse, CheckBillingConnectionResponse, CompanyDataResult, DataResult, LogDataResult, LoginResponse, OCPIGenerateLocalTokenResponse, OCPIJobStatusesResponse, OCPIPingResponse, OICPJobStatusesResponse, OICPPingResponse, OcpiEndpointDataResult, Ordering, Paging, PricingDefinitionDataResult, RegistrationTokenDataResult, SiteAreaDataResult, SiteDataResult, SiteUserDataResult, StatisticDataResult, TagDataResult, TransactionDataResult, TransactionInErrorDataResult, UserDataResult, UserSiteDataResult } from '../types/DataResult';
+import {
+  ActionResponse,
+  ActionsResponse,
+  AssetDataResult,
+  AssetInErrorDataResult,
+  BillingAccountDataResult,
+  BillingInvoiceDataResult,
+  BillingOperationResult,
+  BillingPaymentMethodDataResult,
+  BillingTaxDataResult,
+  BillingTransferDataResult,
+  CarCatalogDataResult,
+  CarDataResult,
+  ChargingProfileDataResult,
+  ChargingStationDataResult,
+  ChargingStationInErrorDataResult,
+  ChargingStationTemplateDataResult,
+  CheckAssetConnectionResponse,
+  CheckBillingConnectionResponse,
+  CompanyDataResult,
+  DataResult,
+  LogDataResult,
+  LoginResponse,
+  OCPIGenerateLocalTokenResponse,
+  OCPIJobStatusesResponse,
+  OCPIPingResponse,
+  OICPJobStatusesResponse,
+  OICPPingResponse,
+  OcpiEndpointDataResult,
+  Ordering,
+  Paging,
+  PricingDefinitionDataResult,
+  RegistrationTokenDataResult,
+  SiteAreaDataResult,
+  SiteDataResult,
+  SiteUserDataResult,
+  StatisticDataResult,
+  TagDataResult,
+  TransactionDataResult,
+  TransactionInErrorDataResult,
+  UserDataResult,
+  UserSiteDataResult,
+  DashboardResult
+} from '../types/DataResult';
 import { EndUserLicenseAgreement } from '../types/Eula';
 import { FilterParams, Image, KeyValue } from '../types/GlobalType';
 import { Log } from '../types/Log';
@@ -2032,6 +2075,36 @@ export class CentralServerService {
       );
   }
 
+  public requestOtp(user: any): Observable<void> {
+    // Verify init
+    this.checkInit();
+    // Set the tenant
+    user['tenant'] = this.windowService.getSubdomain();
+    // Execute
+    return this.httpClient.post<void>(`${this.restServerAuthURL}/${RESTServerRoute.REST_SIGNIN_OTP}`, user,
+      {
+        headers: this.buildHttpHeaders(),
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public verifyOtp(user: any): Observable<LoginResponse> {
+    // Verify init
+    this.checkInit();
+    // Set the tenant
+    user['tenant'] = this.windowService.getSubdomain();
+    // Execute
+    return this.httpClient.post<LoginResponse>(`${this.restServerAuthURL}/${RESTServerRoute.REST_VERIFY_OTP}`, user,
+      {
+        headers: this.buildHttpHeaders(),
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
   public loginSucceeded(token: string): void {
     // Keep the token in local storage
     this.currentUserToken = token;
@@ -2999,6 +3072,19 @@ export class CentralServerService {
       );
   }
 
+  public getDashboard(): Observable<DashboardResult> {
+    // Verify init
+    this.checkInit();
+    // Execute the REST service
+    return this.httpClient.get<DashboardResult>(this.buildRestEndpointUrl(RESTServerRoute.REST_DASHBOARD),
+      {
+        headers: this.buildHttpHeaders(),
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
   public getCars(params: FilterParams,
     paging: Paging = Constants.DEFAULT_PAGING, ordering: Ordering[] = []): Observable<CarDataResult> {
     // Verify init
@@ -3433,6 +3519,117 @@ export class CentralServerService {
         catchError(this.handleHttpError),
       );
   }
+
+  // wallet api
+
+
+  public getWalletBalance(userId : string): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userId) {
+      return EMPTY;
+    }
+    console.log(userId, 'inside getwallet valance');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ id : userId, tenant: tenant};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_BALANCE);
+    console.log(url, 'url');
+    return this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public getWalletTransaction(userID : string, startDate: string, endDate: string): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userID) {
+      return EMPTY;
+    }
+    console.log(userID, 'inside getwallet transaction');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+
+    const params ={ userID: userID, tenant: tenant, startDate:startDate, endDate: endDate};
+    console.log(params, 'itw transaction');
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_TRANSACTION);
+    return this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+  }
+
+  public rechargeWallet(userID : string, rechargeAmount: number): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!userID) {
+      return EMPTY;
+    }
+    console.log(userID, 'inside wallete Recharge');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ userID: userID, tenant: tenant, amount :rechargeAmount};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.WALLET_RECHARGE);
+    // console.log(url, 'url');
+    const data=  this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+    console.log(data);
+    return data;
+  }
+
+
+  public checkTransactionStatus(orderId : string,userID : string, ): Observable<any> {
+    // Verify init
+    this.checkInit();
+    if (!orderId) {
+      return EMPTY;
+    }
+    console.log(orderId, 'inside check status Recharge');
+    // Set the tenant
+    const tenant = this.windowService.getSubdomain();
+    // params['tenant'] = tenant;
+    console.log(tenant, 'tenant called');
+    const params ={ orderId: orderId, userId: userID,  tenant: tenant};
+    // Execute the REST service
+    const url = this.buildRestEndpointUrl(RESTServerRoute.TRANSACTION_STATUS);
+    // console.log(url, 'url');
+    const data=  this.httpClient.get<any>(url,
+      {
+        headers: this.buildHttpHeaders(),
+        params
+      })
+      .pipe(
+        catchError(this.handleHttpError),
+      );
+    console.log(data);
+    return data;
+  }
+
+
+
 
   public getChargingStationTemplates(params: FilterParams,
     paging: Paging = Constants.DEFAULT_PAGING, ordering: Ordering[] = []): Observable<ChargingStationTemplateDataResult> {
