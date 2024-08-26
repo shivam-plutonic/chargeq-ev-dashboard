@@ -25,35 +25,105 @@
 <!--</div>-->
 
 
-<div class="wallet-balance">
-  <h2>{{ 'wallet.balance.title' | translate }}</h2>
-  <p>{{ 'wallet.balance.amount' | translate }}: {{ wallet.balance + '  ZF Coins' }}</p>
+<!--<div class="wallet-balance">-->
+<!--  <h2>{{ 'wallet.balance.title' | translate }}</h2>-->
+<!--  <p>{{ 'wallet.balance.amount' | translate }}: {{ wallet.balance + '  ZF Coins' }}</p>-->
 
-  <div *ngIf="!showRechargeInput">
-    <button mat-raised-button color="primary" (click)="toggleRechargeInput()">
+<!--  <div *ngIf="!showRechargeInput">-->
+<!--    <button mat-raised-button color="primary" (click)="toggleRechargeInput()">-->
+<!--      {{ 'wallet.balance.recharge' | translate }}-->
+<!--    </button>-->
+<!--  </div>-->
+
+<!--  <div *ngIf="showRechargeInput">-->
+<!--    <h2>{{ 'wallet.balance.Enter Amount' | translate }}</h2>-->
+<!--    <form [formGroup]="rechargeForm" class="recharge-form">-->
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>{{ 'wallet.balance.rechargeAmount' | translate }}</mat-label>-->
+<!--        <input matInput formControlName="rechargeAmount" type="text" placeholder="Enter recharge amount" (ngModelChange)="onAmountChange($event)">-->
+<!--        <mat-error *ngIf="rechargeForm.get('rechargeAmount')?.invalid">-->
+<!--          {{ 'wallet.balance.rechargeAmountError' | translate }}-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <div *ngIf="calculatedGST !== null">-->
+<!--        <p>GST (18%): {{ calculatedGST  }}</p>-->
+<!--        <p>Amount after GST: {{ adjustedAmount + ' ZF Coins' }}</p>-->
+<!--      </div>-->
+
+<!--      <button mat-raised-button color="primary" [disabled]="rechargeForm.invalid" (click)="rechargeWallet()">-->
+<!--        {{ 'wallet.balance.recharge' | translate }}-->
+<!--      </button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div style="display: flex; gap: 16px;">
+  <!-- First Card: Wallet Balance -->
+  <div
+    style="
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      width: 300px;
+      margin-right: 20px;
+      flex: 1;
+    "
+  >
+    <h2>{{ 'wallet.balance.title' | translate }}</h2>
+    <h2>{{ 'wallet.balance.amount' | translate }}: <span style="font-size: 30px">{{ wallet.balance + ' ZF Coins' }}</span></h2>
+
+    <button *ngIf="!showRechargeInput" mat-raised-button color="primary" (click)="toggleRechargeInput()">
       {{ 'wallet.balance.recharge' | translate }}
     </button>
   </div>
 
-  <div *ngIf="showRechargeInput">
-    <h2>{{ 'wallet.balance.Enter Amount' | translate }}</h2>
+  <!-- Second Card: Recharge Input Form -->
+  <div
+    *ngIf="showRechargeInput"
+    style="
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      width: 300px;
+      flex: 1;
+    "
+  >
+    <h2>{{ 'wallet.balance.enterAmount' | translate }}</h2>
     <form [formGroup]="rechargeForm" class="recharge-form">
       <mat-form-field appearance="outline">
         <mat-label>{{ 'wallet.balance.rechargeAmount' | translate }}</mat-label>
-        <input matInput formControlName="rechargeAmount" type="text" placeholder="Enter recharge amount" (ngModelChange)="onAmountChange($event)">
-        <mat-error *ngIf="rechargeForm.get('rechargeAmount')?.invalid">
+        <input
+          matInput
+          formControlName="rechargeAmount"
+          type="text"
+          placeholder="{{ 'wallet.balance.rechargeAmount' | translate }}"
+          (ngModelChange)="onAmountChange($event)"
+          [ngClass]="{'input-error': rechargeForm.get('rechargeAmount')?.hasError('pattern')}"
+          style="ime-mode: disabled; -moz-appearance: textfield;"
+        />
+        <mat-error *ngIf="rechargeForm.get('rechargeAmount')?.hasError('pattern')">
           {{ 'wallet.balance.rechargeAmountError' | translate }}
         </mat-error>
       </mat-form-field>
 
       <div *ngIf="calculatedGST !== null">
-        <p>GST (18%): {{ calculatedGST  }}</p>
         <p>Amount after GST: {{ adjustedAmount + ' ZF Coins' }}</p>
+        <p>GST (18%): {{ calculatedGST }}</p>
       </div>
 
-      <button mat-raised-button color="primary" [disabled]="rechargeForm.invalid" (click)="rechargeWallet()">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="rechargeForm.invalid"
+        (click)="rechargeWallet()"
+      >
         {{ 'wallet.balance.recharge' | translate }}
       </button>
     </form>
   </div>
 </div>
+

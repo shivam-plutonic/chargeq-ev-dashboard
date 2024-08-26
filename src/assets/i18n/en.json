@@ -8,7 +8,9 @@
       "title": "Wallet Balance",
       "recharge": "Recharge",
       "amount": "ZF Coins",
-      "recahrgeAmount": "Enter the Amount"
+      "rechargeAmount": "Enter the Amount",
+      "enterAmount": "Enter Amount",
+      "rechargeAmountError": "To proceed with the recharge, you must enter an amount."
     }
 
   },

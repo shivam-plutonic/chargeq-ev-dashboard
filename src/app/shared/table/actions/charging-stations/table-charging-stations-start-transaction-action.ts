@@ -34,7 +34,6 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
     tooltip: 'general.tooltips.start',
     action: this.startTransaction.bind(this),
   };
-
   public getActionDef(): TableChargingStationsStartTransactionActionDef {
     return this.action;
   }
@@ -79,9 +78,18 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
     const dialogRef = dialog.open(chargingStationsStartTransactionDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((startTransaction: StartTransaction) => {
       if (startTransaction) {
-        this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
-          startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
-          centralServerService, router, spinnerService, refresh);
+        centralServerService.getUser(startTransaction.userID).subscribe((user) => {
+          if (user) {
+            if(user.wallet.amount<60){  // ayush changge
+              console.log('insuffiecient balance');
+            }
+            else{
+              this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
+                startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
+                centralServerService, router, spinnerService, refresh);
+            }
+          }
+        });
       }
     });
   }

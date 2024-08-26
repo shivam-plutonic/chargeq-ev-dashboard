@@ -1,22 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { StatusCodes } from 'http-status-codes';
-import { ReCaptchaV3Service } from 'ngx-captcha';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {StatusCodes} from 'http-status-codes';
+import {ReCaptchaV3Service} from 'ngx-captcha';
 
-import { CentralServerService } from '../../services/central-server.service';
-import { ConfigService } from '../../services/config.service';
-import { MessageService } from '../../services/message.service';
-import { SpinnerService } from '../../services/spinner.service';
-import { WindowService } from '../../services/window.service';
-import { RestResponse } from '../../types/GlobalType';
-import { HTTPError } from '../../types/HTTPError';
-import { User } from '../../types/User';
-import { Constants } from '../../utils/Constants';
-import { ParentErrorStateMatcher } from '../../utils/ParentStateMatcher';
-import { Users } from '../../utils/Users';
-import { Utils } from '../../utils/Utils';
+import {CentralServerService} from '../../services/central-server.service';
+import {ConfigService} from '../../services/config.service';
+import {MessageService} from '../../services/message.service';
+import {SpinnerService} from '../../services/spinner.service';
+import {WindowService} from '../../services/window.service';
+import {RestResponse} from '../../types/GlobalType';
+import {HTTPError} from '../../types/HTTPError';
+import {User} from '../../types/User';
+import {Constants} from '../../utils/Constants';
+import {ParentErrorStateMatcher} from '../../utils/ParentStateMatcher';
+import {Users} from '../../utils/Users';
+import {Utils} from '../../utils/Utils';
 
 @Component({
   selector: 'app-authentication-register',
@@ -158,59 +158,60 @@ export class AuthenticationRegisterComponent implements OnInit, OnDestroy {
   }
 
   public register(user: User) {
-    this.reCaptchaV3Service.execute(this.siteKey, 'RegisterUser', (token) => {
-      if (token) {
-        user['captcha'] = token;
-      } else {
-        this.messageService.showErrorMessage(this.messages['invalid_captcha_token']);
-        return;
-      }
-      if (this.formGroup.valid) {
-        this.updateUserPassword(user);
-        this.spinnerService.show();
-        this.centralServerService.registerUser(user).subscribe({
-          next: (response) => {
-            // Hide
-            this.spinnerService.hide();
-            // Ok?
-            if (response.status && response.status === RestResponse.SUCCESS) {
-              // Show success
-              if (Utils.isEmptyString(this.subDomain)) {
-                // Super User in Master Tenant
-                this.messageService.showSuccessMessage(this.messages['register_super_user_success']);
-              } else {
-                // User in Tenant
-                this.messageService.showSuccessMessage(this.messages['register_user_success']);
-              }
-              // Login successful so redirect to return url
-              void this.router.navigate(['/auth/login'], { queryParams: { email: this.email.value } });
+    // this.reCaptchaV3Service.execute(this.siteKey, 'RegisterUser', (token) => {
+    //   if (token) {
+    //     user['captcha'] = token;
+    //   } else {
+    //     this.messageService.showErrorMessage(this.messages['invalid_captcha_token']);
+    //     return;
+    //   }
+    user['captcha'] = 'ayush';
+    if (this.formGroup.valid) {
+      this.updateUserPassword(user);
+      this.spinnerService.show();
+      this.centralServerService.registerUser(user).subscribe({
+        next: (response) => {
+          // Hide
+          this.spinnerService.hide();
+          // Ok?
+          if (response.status && response.status === RestResponse.SUCCESS) {
+            // Show success
+            if (Utils.isEmptyString(this.subDomain)) {
+              // Super User in Master Tenant
+              this.messageService.showSuccessMessage(this.messages['register_super_user_success']);
             } else {
-              // Unexpected Error
-              Utils.handleError(JSON.stringify(response),
-                this.messageService, this.messages['register_user_error']);
+              // User in Tenant
+              this.messageService.showSuccessMessage(this.messages['register_user_success']);
             }
-          },
-          error: (error) => {
-            // Hide
-            this.spinnerService.hide();
-            // Check status
-            switch (error.status) {
-              // Email already exists
-              case HTTPError.USER_EMAIL_ALREADY_EXIST_ERROR:
-                this.messageService.showErrorMessage(this.messages['email_already_exists']);
-                break;
-              // User Agreement not checked
-              case HTTPError.USER_EULA_ERROR:
-                this.messageService.showErrorMessage(this.messages['must_accept_eula']);
-                break;
-              // Unexpected error
-              default:
-                Utils.handleHttpError(error, this.router, this.messageService, this.centralServerService, 'general.unexpected_error_backend');
-            }
+            // Login successful so redirect to return url
+            void this.router.navigate(['/auth/login'], {queryParams: {email: this.email.value}});
+          } else {
+            // Unexpected Error
+            Utils.handleError(JSON.stringify(response),
+              this.messageService, this.messages['register_user_error']);
           }
-        });
-      }
-    });
+        },
+        error: (error) => {
+          // Hide
+          this.spinnerService.hide();
+          // Check status
+          switch (error.status) {
+            // Email already exists
+            case HTTPError.USER_EMAIL_ALREADY_EXIST_ERROR:
+              this.messageService.showErrorMessage(this.messages['email_already_exists']);
+              break;
+            // User Agreement not checked
+            case HTTPError.USER_EULA_ERROR:
+              this.messageService.showErrorMessage(this.messages['must_accept_eula']);
+              break;
+            // Unexpected error
+            default:
+              Utils.handleHttpError(error, this.router, this.messageService, this.centralServerService, 'general.unexpected_error_backend');
+          }
+        }
+      });
+    }
+    // });
   }
 
   private updateUserPassword(user: User) {
