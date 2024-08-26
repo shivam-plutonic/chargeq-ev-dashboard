@@ -79,9 +79,14 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
     const dialogRef = dialog.open(chargingStationsStartTransactionDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((startTransaction: StartTransaction) => {
       if (startTransaction) {
-        this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
-          startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
-          centralServerService, router, spinnerService, refresh);
+        if(startTransaction.user.wallet.amount>60){  // ayush changge
+          console.log('insuffiecient balance');
+        }
+        else{
+          this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
+            startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
+            centralServerService, router, spinnerService, refresh);
+        }
       }
     });
   }

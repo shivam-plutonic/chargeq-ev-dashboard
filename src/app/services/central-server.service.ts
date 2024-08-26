@@ -2167,6 +2167,7 @@ export class CentralServerService {
   public registerUser(user: any): Observable<ActionResponse> {
     // Verify init
     this.checkInit();
+    // console.log("hello it registe API ");
     // Set the tenant
     user['tenant'] = this.windowService.getSubdomain();
     // Execute

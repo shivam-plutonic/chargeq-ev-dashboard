@@ -172,8 +172,7 @@ export class WalletTransactionsComponent implements OnInit {
     const filterValues = this.filterForm.value;
     this.centralServerService.getWalletTransaction(this.userId, filterValues.startDate, filterValues.endDate).subscribe(
       (data) => {
-        this.transactions = data; // Adjust based on your API response
-        console.log('Transaction history:', this.transactions);
+        this.transactions = data.reverse(); // Adjust based on your API response
       },
       (error) => {
         console.error('Error fetching wallet transaction history:', error);

@@ -258,9 +258,6 @@
 //   }
 // }
 //
-
-
-
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CentralServerService } from '../../../services/central-server.service';
@@ -293,7 +290,7 @@ export class WalletBalanceComponent implements OnInit {
     private spinnerService: SpinnerService
   ) {
     this.rechargeForm = this.formBuilder.group({
-      rechargeAmount: ['', [Validators.required, Validators.min(1)]]
+      rechargeAmount: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]] // Ensure positive integers
     });
   }
 
@@ -309,7 +306,7 @@ export class WalletBalanceComponent implements OnInit {
   fetchWalletBalance() {
     this.centralServerService.getWalletBalance(this.userId).subscribe(
       (data) => {
-        if( this.spinnerService ){
+        if (this.spinnerService) {
           this.spinnerService.hide();
         }
         this.wallet.balance = data.balance; // Adjust based on your API response
@@ -321,17 +318,19 @@ export class WalletBalanceComponent implements OnInit {
     );
   }
 
-  onAmountChange(amount: number) {
-    if (amount) {
+  onAmountChange(amount: string) {
+    const parsedAmount = parseInt(amount, 10);
+    if (!isNaN(parsedAmount) && parsedAmount > 0) {
       const gstRate = 0.18;
-      // this.calculatedGST = amount * gstRate;
-      this.adjustedAmount = amount / (1 + gstRate);
-      this.calculatedGST = amount - this.adjustedAmount;
-      this.adjustedAmount = Math.round(this.adjustedAmount );
+      this.adjustedAmount = parsedAmount / (1 + gstRate);
+      this.calculatedGST = parsedAmount - this.adjustedAmount;
+      this.adjustedAmount = Math.round(this.adjustedAmount);
       this.calculatedGST = Math.round(this.calculatedGST);
+      this.rechargeForm.get('rechargeAmount')?.setErrors(null); // Clear errors
     } else {
       this.calculatedGST = null;
       this.adjustedAmount = null;
+      this.rechargeForm.get('rechargeAmount')?.setErrors({ 'pattern': true }); // Set error if invalid
     }
   }
 
@@ -389,4 +388,3 @@ export class WalletBalanceComponent implements OnInit {
     }
   }
 }
-
