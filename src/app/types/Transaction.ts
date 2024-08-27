@@ -74,7 +74,6 @@ export interface OcpiData {
 }
 
 export interface StartTransaction {
-  user: User; // ayush change
   userID: string;
   userFullName: string;
   visualTagID?: string;
