@@ -46,20 +46,26 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="form-check">
-                    <label class="form-check-label">
-                      <input formControlName="acceptEula" type="checkbox" class="form-check-input">
-                      {{ "authentication.accept_eula" | translate }}
-                      <span class="form-check-sign">
-                        <span class="check"></span>
-                      </span>
-                    </label>
+                    <div class="input-group-prepend text-center mt-3 ms-2">
+                      <mat-checkbox [formControl]="acceptEula" required>
+                        <span id="eula-checkbox" class="adapt-font-size">{{'authentication.accept' | translate}} </span>
+                        <a class="auth-link" href="/auth/eula" target="_blank">
+                          <span class="adapt-font-size">{{'authentication.eula' | translate}}</span>
+                        </a>
+                      </mat-checkbox>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
-            <div class="card-footer justify-content-center">
-              <button type="submit" class="btn btn-primary btn-wd btn-lg"> button <!--{{ //!otpRequested ? "authentication.request_otp" | translate : "authentication.verify_otp" | translate }} --> </button>
+            <div *ngIf="!otpRequested" class="card-footer justify-content-center">
+              <button type="submit" class="btn btn-primary btn-wd btn-lg">Generate OTP</button>
             </div>
+            <div *ngIf="otpRequested" class="card-footer justify-content-center">
+              <button type="submit" class="btn btn-primary btn-wd btn-lg">Signin</button>
+            </div>
+
           </div>
         </form>
       </div>
