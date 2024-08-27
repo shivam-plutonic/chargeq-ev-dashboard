@@ -1,27 +1,33 @@
-import { ComponentType } from '@angular/cdk/portal';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { ChargingStationsAuthorizations, DialogParamsWithAuth } from 'types/Authorization';
-import { ButtonAction, ButtonActionColor } from 'types/GlobalType';
-import { StartTransaction, StartTransactionDialogData } from 'types/Transaction';
+import {ComponentType} from '@angular/cdk/portal';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs';
+import {ChargingStationsAuthorizations, DialogParamsWithAuth} from 'types/Authorization';
+import {ButtonAction, ButtonActionColor} from 'types/GlobalType';
+import {StartTransaction, StartTransactionDialogData} from 'types/Transaction';
 
-import { CentralServerService } from '../../../../services/central-server.service';
-import { DialogService } from '../../../../services/dialog.service';
-import { MessageService } from '../../../../services/message.service';
-import { SpinnerService } from '../../../../services/spinner.service';
-import { ChargePointStatus, ChargingStation, ChargingStationButtonAction, Connector, OCPPGeneralResponse } from '../../../../types/ChargingStation';
-import { ActionResponse } from '../../../../types/DataResult';
-import { TableActionDef } from '../../../../types/Table';
-import { Utils } from '../../../../utils/Utils';
-import { TableAction } from '../table-action';
+import {CentralServerService} from '../../../../services/central-server.service';
+import {DialogService} from '../../../../services/dialog.service';
+import {MessageService} from '../../../../services/message.service';
+import {SpinnerService} from '../../../../services/spinner.service';
+import {
+  ChargePointStatus,
+  ChargingStation,
+  ChargingStationButtonAction,
+  Connector,
+  OCPPGeneralResponse
+} from '../../../../types/ChargingStation';
+import {ActionResponse} from '../../../../types/DataResult';
+import {TableActionDef} from '../../../../types/Table';
+import {Utils} from '../../../../utils/Utils';
+import {TableAction} from '../table-action';
 
 export interface TableChargingStationsStartTransactionActionDef extends TableActionDef {
   action: (chargingStationsStartTransactionDialogComponent: ComponentType<unknown>, chargingStation: ChargingStation, connector: Connector,
-    dialogService: DialogService, dialog: MatDialog, translateService: TranslateService,
-    messageService: MessageService, centralServerService: CentralServerService, spinnerService: SpinnerService, router: Router,
-    refresh?: () => Observable<void>) => void;
+           dialogService: DialogService, dialog: MatDialog, translateService: TranslateService,
+           messageService: MessageService, centralServerService: CentralServerService, spinnerService: SpinnerService, router: Router,
+           refresh?: () => Observable<void>) => void;
 }
 
 export class TableChargingStationsStartTransactionAction implements TableAction {
@@ -34,15 +40,16 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
     tooltip: 'general.tooltips.start',
     action: this.startTransaction.bind(this),
   };
+
   public getActionDef(): TableChargingStationsStartTransactionActionDef {
     return this.action;
   }
 
   private startTransaction(chargingStationsStartTransactionDialogComponent: ComponentType<unknown>,
-    chargingStation: ChargingStation, connector: Connector, dialogService: DialogService, dialog: MatDialog,
-    translateService: TranslateService, messageService: MessageService,
-    centralServerService: CentralServerService, spinnerService: SpinnerService, router: Router,
-    refresh?: () => Observable<void>) {
+                           chargingStation: ChargingStation, connector: Connector, dialogService: DialogService, dialog: MatDialog,
+                           translateService: TranslateService, messageService: MessageService,
+                           centralServerService: CentralServerService, spinnerService: SpinnerService, router: Router,
+                           refresh?: () => Observable<void>) {
     if (chargingStation.inactive) {
       dialogService.createAndShowOkDialog(
         translateService.instant('chargers.action_error.transaction_start_title'),
@@ -78,16 +85,15 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
     const dialogRef = dialog.open(chargingStationsStartTransactionDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((startTransaction: StartTransaction) => {
       if (startTransaction) {
-        centralServerService.getUser(startTransaction.userID).subscribe((user) => {
-          if (user) {
-            if(user.wallet.amount<60){  // ayush changge
-              console.log('insuffiecient balance');
-            }
-            else{
-              this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
-                startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
-                centralServerService, router, spinnerService, refresh);
-            }
+        centralServerService.getWalletBalance(startTransaction.userID).subscribe((data) => {
+          if (data.balance < 4) {  // ayush changge
+            dialogService.createAndShowOkDialog(
+              translateService.instant('chargers.action_error.transaction_wallet_low_balance'),
+              translateService.instant('chargers.action_error.transaction_wallet_low_balance'));
+          } else {
+            this.startTransactionForUser(chargingStation, connector, startTransaction.userFullName, startTransaction.userID,
+              startTransaction.visualTagID, startTransaction.carID, dialogService, translateService, messageService,
+              centralServerService, router, spinnerService, refresh);
           }
         });
       }
@@ -95,9 +101,9 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
   }
 
   private startTransactionForUser(chargingStation: ChargingStation, connector: Connector, userFullName: string, userID: string,
-    visualTagID: string, carID: string | null, dialogService: DialogService, translateService: TranslateService,
-    messageService: MessageService, centralServerService: CentralServerService, router: Router,
-    spinnerService: SpinnerService, refresh?: () => Observable<void>): void {
+                                  visualTagID: string, carID: string | null, dialogService: DialogService, translateService: TranslateService,
+                                  messageService: MessageService, centralServerService: CentralServerService, router: Router,
+                                  spinnerService: SpinnerService, refresh?: () => Observable<void>): void {
     dialogService.createAndShowYesNoDialog(
       translateService.instant('chargers.start_transaction_title'),
       translateService.instant('chargers.start_transaction_confirm', {
@@ -121,7 +127,7 @@ export class TableChargingStationsStartTransactionAction implements TableAction 
             spinnerService.hide();
             if (startTransactionResponse.status === OCPPGeneralResponse.ACCEPTED) {
               messageService.showSuccessMessage(
-                translateService.instant('chargers.start_transaction_success', { chargeBoxID: chargingStation.id }));
+                translateService.instant('chargers.start_transaction_success', {chargeBoxID: chargingStation.id}));
               if (refresh) {
                 refresh().subscribe();
               }

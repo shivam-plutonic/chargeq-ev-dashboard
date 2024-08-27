@@ -990,6 +990,7 @@
       "get_diagnostics_error": "Error occurred while starting the diagnostics download, check the logs"
     },
     "action_error": {
+      "transaction_wallet_low_balance": "Insufficient Balance",
       "transaction_start_title": "Start session error",
       "transaction_in_progress": "A session is in progress, unable to start a new session",
       "no_active_transaction": "No active session",
@@ -1242,6 +1243,7 @@
       "tags": "RFID Cards",
       "billing": "Billing"
     },
+    "my_wallet": "My Wallet",
     "security": "Security",
     "import_users": "Import users",
     "import_users_message": "The import will discard all other previously uploaded users not yet imported in the database, do you want to continue?",
