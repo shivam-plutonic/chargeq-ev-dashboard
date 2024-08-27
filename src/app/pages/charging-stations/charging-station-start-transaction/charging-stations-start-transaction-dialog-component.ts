@@ -149,6 +149,7 @@ export class ChargingStationsStartTransactionDialogComponent implements OnInit {
     }
   }
 
+
   public assignUser() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'transparent-dialog-container';
