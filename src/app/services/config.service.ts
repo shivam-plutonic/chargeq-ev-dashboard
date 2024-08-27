@@ -48,8 +48,8 @@ export class ConfigService {
 
   public getCentralSystemServer(): CentralSystemServerConfiguration {
     const centralSystemServer = this.getConfig().CentralSystemServer;
-    centralSystemServer.protocol = 'http';  // ayush changes
-    centralSystemServer.port = 80;
+    // centralSystemServer.protocol = 'http';  // ayush changes
+    // centralSystemServer.port = 80;
     if (!centralSystemServer.protocol) {
       centralSystemServer.protocol = this.window.location.protocol.slice(0, -1);
     }
@@ -57,7 +57,7 @@ export class ConfigService {
       centralSystemServer.host = this.window.location.hostname;
     }
     if (!centralSystemServer.port) {
-      // centralSystemServer.port = Utils.convertToInteger(this.window.location.port);
+      centralSystemServer.port = Utils.convertToInteger(this.window.location.port);
     }
     return centralSystemServer ;
   }
