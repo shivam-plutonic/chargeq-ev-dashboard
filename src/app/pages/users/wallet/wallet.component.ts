@@ -17,7 +17,7 @@ export class WalletComponent extends AbstractTabComponent  implements OnInit {
   activeTabIndex = 0;
   dialogRef = false; // Change this based on your dialog condition
   wallet = {
-    balance: 10, // Fetch actual balance
+    balance: 0, // Fetch actual balance
     transactions: [] // Fetch actual transactions
   };
 

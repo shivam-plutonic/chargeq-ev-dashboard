@@ -309,7 +309,7 @@ export class WalletBalanceComponent implements OnInit {
         if (this.spinnerService) {
           this.spinnerService.hide();
         }
-        this.wallet.balance = data.balance; // Adjust based on your API response
+        this.wallet.balance =  Math.round(data.balance); // Adjust based on your API response
         this.formGroup.patchValue({ amount: this.wallet.balance });
       },
       (error) => {
